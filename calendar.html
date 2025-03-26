@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Kalendayue</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div id='mainCalDiv'>
+            <h1 id="title">Kalendayue</h1>
+            <div id="month_and_year"></div>
+            <div id="buttons">
+                <input type="button" id="previous" value="Aurrekue"> 
+                <input type="button" id="next" value="Hurrengue">
+            </div><br>
+            <table id=mainCalendar>
+                <thead>
+                    <tr>
+                        <th>Astelehena</th>
+                        <th>Astearte</th>
+                        <th>Asteazken</th>
+                        <th>Ostegun</th>
+                        <th>Ostiral</th>
+                        <th>Zapatu</th>
+                        <th>Jai</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+
+            <div id="eventModal" class="modal">
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h3 id="modalDate"></h3>
+                  <textarea id="eventText" placeholder="Escribí un evento..."></textarea><br>
+                  <button id="saveEvent">Guardar</button>
+                </div>
+            </div>
+              
+        </div>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="scripts.js"></script>
+    </body>
+</html>
