@@ -7,9 +7,9 @@
     <body>
         <div id='mainCalDiv'>
             <h1 id="title">Kalendayue</h1>
-            <div id="month_and_year"></div>
             <div id="buttons">
                 <input type="button" id="previous" value="Aurrekue"> 
+                <div id="month_and_year"></div>
                 <input type="button" id="next" value="Hurrengue">
             </div><br>
             <table id=mainCalendar>
@@ -30,10 +30,17 @@
 
             <div id="eventModal" class="modal">
                 <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h3 id="modalDate"></h3>
-                  <textarea id="eventText" placeholder="Escribí un evento..."></textarea><br>
-                  <button id="saveEvent">Guardar</button>
+                    <span class="close">&times;</span>
+                    <h3 id="modalDate"></h3>
+                    <div id="eventTypeGroup">
+                        <label><input type="radio" name="eventType" value="Aitor"> Aitor</label>
+                        <label><input type="radio" name="eventType" value="Ane" checked> Ane</label>
+                        <label><input type="radio" name="eventType" value="Biyok"> Biyok</label>
+                    </div>
+                    <label for="eventTime">Ordue:</label>
+                    <input type="time" id="eventTime"><br><br>
+                    <textarea id="eventText" placeholder="Deskribapena"></textarea><br>
+                    <button id="saveEvent">Gorde</button>
                 </div>
             </div>
               

@@ -1,6 +1,6 @@
 body{
     width: 99%; /* how wide to make your web page */
-    background-color: wheat;/* what color to make the background */
+    background-color: rgba(148, 148, 100, 0.5);/* what color to make the background */
     font:13px/17px Verdana, sans-serif; /* default font */
     color: teal;
 }
@@ -26,22 +26,20 @@ table, th, td {
 th {
     background-color: teal;
     color: navajowhite;
-}
-.eventdiv:hover, .eventdiv:focus {
-    background-color: #f5f5f59d;
-    border-radius: 8px;
-    cursor: pointer;
+    font-size: 20px;
 }
 #title {
     text-shadow: 3px 3px 5px gray;
     font-style: oblique;
     text-align: center;
+    font-size: 40px;
+    color: rgb(41, 9, 219);
 }
 #month_and_year {
     display: inline-block;
-    width: 80%;
-    text-align: left;
-    color: orange;
+    text-align: center;
+    width: 200px;
+    color: rgb(25, 0, 255);
 }
 #buttons {
     display: inline-block;
@@ -186,3 +184,32 @@ th {
     resize: none;
 }
 
+#eventTypeGroup {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+#eventTypeGroup label {
+    margin-right: 15px;
+    font-weight: normal;
+    color: white;
+}
+
+.event-aitor {
+    background-color: #ffe0e0 !important;
+}
+.event-ane {
+    background-color: #e0f0ff !important;
+}
+.event-biyok {
+    background-color: #e0ffe0 !important;
+}
+
+td.nullDay {
+    background-color: #f7f7f7; /* un gris claro distinto al de los días activos */
+    color: #bbb;
+}
+
+td.nullDay .day-number {
+    color: #aaa; /* más tenue aún para el número */
+}

@@ -68,34 +68,64 @@ const drawCalendar = function (year, month) {
         for (let j = 0; j < 7; j++) {
             let cell = document.createElement("td");
 
-            if (cellsFilled >= firstDay && dayCounter <= numberDays) {
-                cell.id = dayCounter.toString();
-
-                // Número del día en la esquina
+            if (cellsFilled < firstDay) {
+                // Días del mes anterior
+                let prevMonth = (month === 0) ? 11 : month - 1;
+                let prevYear = (month === 0) ? year - 1 : year;
+                let daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+                let dayNum = daysInPrevMonth - (firstDay - cellsFilled - 1);
+            
+                let dayNumber = document.createElement("div");
+                dayNumber.classList.add("day-number", "other-month");
+                dayNumber.textContent = dayNum;
+                cell.appendChild(dayNumber);
+            
+                cell.classList.add("nullDay");
+            
+            } else if (dayCounter <= numberDays) {
+                // Días del mes actual
+                let thisDay = dayCounter;
+                cell.id = thisDay.toString();
+            
                 let dayNumber = document.createElement("div");
                 dayNumber.classList.add("day-number");
-                dayNumber.textContent = dayCounter.toString();
+                dayNumber.textContent = thisDay;
                 cell.appendChild(dayNumber);
-
-                // Espacio para eventos u otro contenido
+            
                 let contentDiv = document.createElement("div");
                 contentDiv.classList.add("day-content");
-                let thisDay = dayCounter;
+                cell.appendChild(contentDiv);
+            
+                // Mostrar evento si existe
+                let key = `${year}-${month}-${thisDay}`;
+                if (events[key]) {
+                    let eventData = events[key];
+                    let display = eventData.time ? `<strong>${eventData.time}</strong> - ` : "";
+                    contentDiv.innerHTML = `${display}<strong>[${eventData.type}]</strong> ${eventData.text}`;
+                    cell.classList.add(`event-${eventData.type}`);
+                }
+            
                 cell.addEventListener("click", function () {
                     openEventModal(thisDay);
                 });
-             
-                cell.appendChild(contentDiv);
-
-                // Resaltar hoy
-                if (isTodayMonth && dayCounter === today.getDate()) {
+            
+                // Marcar hoy
+                if (isTodayMonth && thisDay === today.getDate()) {
                     cell.classList.add("today");
                 }
-
+            
                 dayCounter++;
             } else {
+                // Días del mes siguiente
+                let nextDay = (cellsFilled - (firstDay + numberDays)) + 1;
+            
+                let dayNumber = document.createElement("div");
+                dayNumber.classList.add("day-number", "other-month");
+                dayNumber.textContent = nextDay;
+                cell.appendChild(dayNumber);
+            
                 cell.classList.add("nullDay");
-            }
+            }            
 
             row.appendChild(cell);
             cellsFilled++;
@@ -122,42 +152,63 @@ let events = {}; // Guardamos eventos en memoria
 
 const openEventModal = function(day) {
     selectedDay = day;
-    modalDate.textContent = `${day}/${drawnMonth + 1}/${drawnYear}`;
+    modalDate.textContent = `${drawnYear}-${drawnMonth + 1}-${day}`;
 
     let key = `${drawnYear}-${drawnMonth}-${day}`;
     eventText.value = events[key] || "";
 
     modal.style.display = "block";
+    const existingEvent = events[key];
+
+    eventText.value = existingEvent ? existingEvent.text : "";
+    document.getElementById("eventTime").value = existingEvent && existingEvent.time ? existingEvent.time : "";
+    if (existingEvent) {
+        document.querySelector(`input[name="eventType"][value="${existingEvent.type}"]`).checked = true;
+    } else {
+        document.querySelector('input[name="eventType"][value="normal"]').checked = true;
+    }
 };
 
 closeBtn.onclick = function () {
     modal.style.display = "none";
 };
 
-// window.onclick = function (event) {
-//     if (event.target == modal) {
-//         modal.style.display = "none";
-//     }
-// };
-
 saveBtn.onclick = function () {
     if (selectedDay !== null) {
         let key = `${drawnYear}-${drawnMonth}-${selectedDay}`;
         let text = eventText.value.trim();
+        const eventType = document.querySelector('input[name="eventType"]:checked').value;
+        const time = document.getElementById("eventTime").value;
 
         let cell = document.getElementById(selectedDay.toString());
         let content = cell.querySelector(".day-content");
 
         if (text) {
-            // Guardar o actualizar
-            events[key] = text;
-            content.textContent = text;
+            events[key] = {
+                text: text,
+                type: eventType,
+                time: time
+            };
+
+            // Mostrar con hora
+            let display = time ? `<strong>${time}</strong> - ` : "";
+            content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
+
+            // Color según tipo
+            cell.classList.remove("event-aitor", "event-ane", "event-biyok");
+            cell.classList.add(`event-${eventType}`);
         } else {
-            // Eliminar si existe
+            // Borrar evento
             delete events[key];
             content.textContent = "";
+            cell.classList.remove("event-aitor", "event-ane", "event-biyok");
         }
+
+        // Guardar en localStorage (si estás usando)
+        localStorage.setItem("calendarEvents", JSON.stringify(events));
 
         modal.style.display = "none";
     }
 };
+
+
