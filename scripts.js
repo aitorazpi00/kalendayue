@@ -165,7 +165,7 @@ const openEventModal = function(day) {
     if (existingEvent) {
         document.querySelector(`input[name="eventType"][value="${existingEvent.type}"]`).checked = true;
     } else {
-        document.querySelector('input[name="eventType"][value="normal"]').checked = true;
+        document.querySelector('input[name="eventType"][value="Ane"]').checked = true;
     }
 };
 
@@ -195,13 +195,13 @@ saveBtn.onclick = function () {
             content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
 
             // Color según tipo
-            cell.classList.remove("event-aitor", "event-ane", "event-biyok");
+            cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
             cell.classList.add(`event-${eventType}`);
         } else {
             // Borrar evento
             delete events[key];
             content.textContent = "";
-            cell.classList.remove("event-aitor", "event-ane", "event-biyok");
+            cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
         }
 
         // Guardar en localStorage (si estás usando)

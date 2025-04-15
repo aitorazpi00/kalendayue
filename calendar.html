@@ -32,13 +32,54 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h3 id="modalDate"></h3>
-                    <div id="eventTypeGroup">
-                        <label><input type="radio" name="eventType" value="Aitor"> Aitor</label>
-                        <label><input type="radio" name="eventType" value="Ane" checked> Ane</label>
-                        <label><input type="radio" name="eventType" value="Biyok"> Biyok</label>
-                    </div>
-                    <label for="eventTime">Ordue:</label>
-                    <input type="time" id="eventTime"><br><br>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="eventTypeGroup">
+                                    <label><input type="radio" name="eventType" id="eventType" value="Aitor"> Aitor</label>
+                                    <label><input type="radio" name="eventType" id="eventType" value="Ane" checked> Ane</label>
+                                    <label><input type="radio" name="eventType" id="eventType" value="Biyok"> Biyok</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div id="eventDateGroup">
+                                    <label for="">Egune(k):</label>
+                                    <label><input type="radio" name="eventDate" value="Gaur" onchange="" checked  >Gaur</label>
+                                    <label><input type="radio" name="eventDate" value="Egunak" onchange="">Egun batzuk</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="nork_proposatu_div">
+                                    <label for="nork_proposatu">Nork proposatu: </label>
+                                    <label><input type="radio" name="nork_proposatu" id="nork_proposatu" value="Aitor"> Aitor</label>
+                                    <label><input type="radio" name="nork_proposatu" id="nork_proposatu" value="Ane" checked> Ane</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div id="days">
+                                    <label for="hasiera_egune">Hasiera egune:</label>
+                                    <input type="date" id="hasiera_egune" name="hasiera_egune" />
+                                    <label for="bukaera_egune">Bukaera egune:</label>
+                                    <input type="date" id="bukaera_egune" name="bukaera_egune" />
+                                </div>
+                                
+                                <div id="fechas_o_hora">
+                                    <label for="eventTime">Ordue:</label>
+                                    <input type="time" id="eventTime"><br><br>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- <div id="eventType_eventDate">
+                        
+                        
+                    </div> -->
+
+                    
                     <textarea id="eventText" placeholder="Deskribapena"></textarea><br>
                     <button id="saveEvent">Gorde</button>
                 </div>

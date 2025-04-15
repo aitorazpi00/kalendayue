@@ -121,8 +121,9 @@ th {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
+    width: 40%; /* Could be more or less, depending on screen size */
     color: white;
+    height: 40%;
   }
   .modal-content2 {
     background-color: teal;
@@ -153,7 +154,7 @@ th {
     position: relative;
     vertical-align: top;
     height: 100px;
-    padding: 5px;
+    /* padding: 5px; */
     overflow: hidden;
 }
 
@@ -177,31 +178,19 @@ th {
     color: #aaa;
 }
 
-#eventText {
-    width: 100%;
-    height: 60px;
-    margin-top: 10px;
-    resize: none;
-}
-
-#eventTypeGroup {
+#eventDateGroup{
     margin-top: 10px;
     margin-bottom: 10px;
-    text-align: left;
-}
-#eventTypeGroup label {
-    margin-right: 15px;
-    font-weight: normal;
-    color: white;
+    text-align: right;
 }
 
-.event-aitor {
+.event-Aitor {
     background-color: #ffe0e0 !important;
 }
-.event-ane {
+.event-Ane {
     background-color: #e0f0ff !important;
 }
-.event-biyok {
+.event-Biyok {
     background-color: #e0ffe0 !important;
 }
 
