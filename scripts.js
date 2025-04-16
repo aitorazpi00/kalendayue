@@ -168,9 +168,8 @@ const openEventModal = function(day) {
             erakutsi_proposatu(false)
     } else {
         document.querySelector('input[name="eventType"][value="Ane"]').checked = true;
+        erakutsi_proposatu(false)
     }
-
-    document.getElementById('nork_proposatu_div').hidden = true
 
     //Gaurko egune jarri
     const mm = String(drawnMonth + 1).padStart(2, '0');
@@ -193,7 +192,44 @@ saveBtn.onclick = function () {
             let buk_egune = document.getElementById('bukaera_egune').value
             if(has_egune !== "" && buk_egune !== ""){
                 //Tarteko egun danak hartu
-                let days_to_mark = []
+                let markatzeko_egunek = []
+                const hasierie = new Date(has_egune);
+                const bukaerie = new Date(buk_egune);
+                orain = hasierie;
+                while (orain <= bukaerie) {
+                    const yyyy = orain.getFullYear();
+                    const mm = String(orain.getMonth());
+                    const dd = String(orain.getDate());
+                    markatzeko_egunek.push(`${yyyy}-${mm}-${dd}`);
+                    
+                    // Sumar un día
+                    orain.setDate(orain.getDate() + 1);
+                }
+                //Egun danak markau
+                for(var i=0; i < markatzeko_egunek.length; i++){
+                    mark_egune = markatzeko_egunek[i];
+                    const mark_egune_date = new Date(mark_egune);
+                    const dd = mark_egune_date.getDate();
+                    let text = eventText.value.trim();
+                    const eventType = document.querySelector('input[name="eventType"]:checked').value;
+                    let cell = document.getElementById(dd.toString());
+                    let content = cell.querySelector(".day-content");
+
+                    if (text) {
+                        events[mark_egune] = {
+                            text: text,
+                            type: eventType,
+                            time: ""
+                        };
+
+                        // Mostrar
+                        content.innerHTML = `<strong>[${eventType}]</strong><br> ${text}`;
+
+                        // Color según tipo
+                        cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                        cell.classList.add(`event-${eventType}`);
+                    }
+                }
             }
         }else{
 
@@ -231,6 +267,8 @@ saveBtn.onclick = function () {
 
         modal.style.display = "none";
     }
+
+    // document.getElementById('jsonTexto').value = JSON.stringify(events, null, 2); // Pruebatako
 };
 
 function erakutsi_proposatu(erakutsi){
@@ -250,3 +288,4 @@ function erakutsi_egunak_ordua(zer){
     }
 }
 
+document.getElementById('jsonTexto').value = JSON.stringify(events, null, 2);
