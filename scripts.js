@@ -164,8 +164,12 @@ const openEventModal = function(day) {
     document.getElementById("ordue").value = existingEvent && existingEvent.time ? existingEvent.time : "";
     if (existingEvent) {
         document.querySelector(`input[name="eventType"][value="${existingEvent.type}"]`).checked = true;
-        if(existingEvent == "Biyok")
+        if(existingEvent.type == "Biyok"){
             erakutsi_proposatu(false)
+            if(!existingEvent.onartua){
+                document.getElementById("onartu_retxazau").hidden = false;
+            }
+        }
     } else {
         document.querySelector('input[name="eventType"][value="Ane"]').checked = true;
         erakutsi_proposatu(false)
@@ -242,15 +246,21 @@ saveBtn.onclick = function () {
             let content = cell.querySelector(".day-content");
 
             if (text) {
+                onartua = true;
+                if(eventType == "Biyok"){
+                    onartua = false;
+                }
                 events[key] = {
                     text: text,
                     type: eventType,
-                    time: time
+                    time: time,
+                    onartua: onartua,
                 };
 
                 // Mostrar con hora
                 let display = time ? `<strong>${time}</strong> - ` : "";
-                content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
+                let onartua_text = onartua ? "Onartua" : "Pendiente";
+                content.innerHTML = `<strong>[${display}${eventType} - ${onartua_text}]</strong><br> ${text}`;
 
                 // Color según tipo
                 cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
@@ -288,4 +298,4 @@ function erakutsi_egunak_ordua(zer){
     }
 }
 
-document.getElementById('jsonTexto').value = JSON.stringify(events, null, 2);
+// document.getElementById('jsonTexto').value = JSON.stringify(events, null, 2);

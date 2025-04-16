@@ -186,13 +186,17 @@ th {
 }
 
 .event-Aitor {
-    background-color: #ffe0e0 !important;
+    background-color: #c6da15 !important;
 }
 .event-Ane {
-    background-color: #e0f0ff !important;
+    background-color: #f1a6b9 !important;
 }
 .event-Biyok {
-    background-color: #e0ffe0 !important;
+    background-color: #5dcee2 !important;
+}
+
+.event-BiyokOnartua {
+    background-color: #06af06 !important;
 }
 
 td.nullDay {
