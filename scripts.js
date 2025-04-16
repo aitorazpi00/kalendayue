@@ -161,12 +161,23 @@ const openEventModal = function(day) {
     const existingEvent = events[key];
 
     eventText.value = existingEvent ? existingEvent.text : "";
-    document.getElementById("eventTime").value = existingEvent && existingEvent.time ? existingEvent.time : "";
+    document.getElementById("ordue").value = existingEvent && existingEvent.time ? existingEvent.time : "";
     if (existingEvent) {
         document.querySelector(`input[name="eventType"][value="${existingEvent.type}"]`).checked = true;
+        if(existingEvent == "Biyok")
+            erakutsi_proposatu(false)
     } else {
         document.querySelector('input[name="eventType"][value="Ane"]').checked = true;
     }
+
+    document.getElementById('nork_proposatu_div').hidden = true
+
+    //Gaurko egune jarri
+    const mm = String(drawnMonth + 1).padStart(2, '0');
+    const dd = String(day).padStart(2, '0');
+    const fechaFormateada = `${drawnYear}-${mm}-${dd}`;
+    document.getElementById('hasiera_egune').value = fechaFormateada;
+
 };
 
 closeBtn.onclick = function () {
@@ -175,35 +186,46 @@ closeBtn.onclick = function () {
 
 saveBtn.onclick = function () {
     if (selectedDay !== null) {
-        let key = `${drawnYear}-${drawnMonth}-${selectedDay}`;
-        let text = eventText.value.trim();
-        const eventType = document.querySelector('input[name="eventType"]:checked').value;
-        const time = document.getElementById("eventTime").value;
+        //Egun bat baino geyo aukerau ezkeo
+        let egune_o_ordue_elegiuta = document.querySelector('input[name="egunek_ordue"]:checked').value
+        if(egune_o_ordue_elegiuta == "Egunek"){
+            let has_egune = document.getElementById('hasiera_egune').value
+            let buk_egune = document.getElementById('bukaera_egune').value
+            if(has_egune !== "" && buk_egune !== ""){
+                //Tarteko egun danak hartu
+                let days_to_mark = []
+            }
+        }else{
 
-        let cell = document.getElementById(selectedDay.toString());
-        let content = cell.querySelector(".day-content");
+            let key = `${drawnYear}-${drawnMonth}-${selectedDay}`;
+            let text = eventText.value.trim();
+            const eventType = document.querySelector('input[name="eventType"]:checked').value;
+            const time = document.getElementById("ordue").value;
 
-        if (text) {
-            events[key] = {
-                text: text,
-                type: eventType,
-                time: time
-            };
+            let cell = document.getElementById(selectedDay.toString());
+            let content = cell.querySelector(".day-content");
 
-            // Mostrar con hora
-            let display = time ? `<strong>${time}</strong> - ` : "";
-            content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
+            if (text) {
+                events[key] = {
+                    text: text,
+                    type: eventType,
+                    time: time
+                };
 
-            // Color según tipo
-            cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
-            cell.classList.add(`event-${eventType}`);
-        } else {
-            // Borrar evento
-            delete events[key];
-            content.textContent = "";
-            cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                // Mostrar con hora
+                let display = time ? `<strong>${time}</strong> - ` : "";
+                content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
+
+                // Color según tipo
+                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                cell.classList.add(`event-${eventType}`);
+            } else {
+                // Borrar evento
+                delete events[key];
+                content.textContent = "";
+                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+            }
         }
-
         // Guardar en localStorage (si estás usando)
         localStorage.setItem("calendarEvents", JSON.stringify(events));
 
@@ -211,4 +233,20 @@ saveBtn.onclick = function () {
     }
 };
 
+function erakutsi_proposatu(erakutsi){
+    if(erakutsi){
+        document.getElementById('nork_proposatu_div').hidden = false
+    }else
+        document.getElementById('nork_proposatu_div').hidden = true
+}
+
+function erakutsi_egunak_ordua(zer){
+    if(zer == "ordue"){
+        document.getElementById('egunek_div').hidden = true
+        document.getElementById('ordue_div').hidden = false
+    }else{
+        document.getElementById('egunek_div').hidden = false
+        document.getElementById('ordue_div').hidden = true
+    }
+}
 
