@@ -3,6 +3,10 @@ let drawnYear;
 let eventTypes = [];
 let currentToken;
 
+let onartuta = "onartuta"
+let retxazauta = "retxazauta"
+let pendiente = "pendiente"
+
 const clearCal = function () {
     document.getElementById("month_and_year").innerHTML = "";
     document.getElementById("tbody").innerHTML = "";
@@ -166,13 +170,15 @@ const openEventModal = function(day) {
         document.querySelector(`input[name="eventType"][value="${existingEvent.type}"]`).checked = true;
         if(existingEvent.type == "Biyok"){
             erakutsi_proposatu(false)
-            if(!existingEvent.onartua){
+            if(events[key].egoera)
                 document.getElementById("onartu_retxazau").hidden = false;
-            }
+            else
+                document.getElementById("onartu_retxazau").hidden = true;
         }
     } else {
         document.querySelector('input[name="eventType"][value="Ane"]').checked = true;
-        erakutsi_proposatu(false)
+        erakutsi_proposatu(false);
+        document.getElementById("onartu_retxazau").hidden = true;
     }
 
     //Gaurko egune jarri
@@ -246,21 +252,22 @@ saveBtn.onclick = function () {
             let content = cell.querySelector(".day-content");
 
             if (text) {
-                onartua = true;
+                egoera = pendiente;
                 if(eventType == "Biyok"){
-                    onartua = false;
-                }
+                    if (key in events){
+                        egoera = events[key].egoera  
+                    } 
+                } 
                 events[key] = {
                     text: text,
                     type: eventType,
                     time: time,
-                    onartua: onartua,
+                    egoera: egoera,
                 };
 
                 // Mostrar con hora
                 let display = time ? `<strong>${time}</strong> - ` : "";
-                let onartua_text = onartua ? "Onartua" : "Pendiente";
-                content.innerHTML = `<strong>[${display}${eventType} - ${onartua_text}]</strong><br> ${text}`;
+                content.innerHTML = `<strong>[${display}${eventType} - ${egoera}]</strong><br> ${text}`;
 
                 // Color según tipo
                 cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
@@ -296,6 +303,28 @@ function erakutsi_egunak_ordua(zer){
         document.getElementById('egunek_div').hidden = false
         document.getElementById('ordue_div').hidden = true
     }
+}
+
+function proposamena_onartu(){
+    let key = `${drawnYear}-${drawnMonth}-${selectedDay}`;
+    let cell = document.getElementById(selectedDay.toString());
+    cell.classList.remove("event-Biyok", "event-BiyokRetxazauta");
+    cell.classList.add("event-BiyokOnartuta");
+    events[key].egoera = onartuta;
+    let content = cell.querySelector(".day-content");
+    let display = events[key].time ? `<strong>${events[key].time}</strong> - ` : "";
+    content.innerHTML = `<strong>[${display}${events[key].type} - ${onartuta}]</strong><br> ${events[key].text}`;
+}
+
+function proposamena_retxazau(){
+    let key = `${drawnYear}-${drawnMonth}-${selectedDay}`;
+    let cell = document.getElementById(selectedDay.toString());
+    cell.classList.remove("event-Biyok", "event-BiyokOnartuta");
+    cell.classList.add("event-BiyokRetxazauta");
+    events[key].egoera = retxazauta;
+    let content = cell.querySelector(".day-content");
+    let display = events[key].time ? `<strong>${events[key].time}</strong> - ` : "";
+    content.innerHTML = `<strong>[${display}${events[key].type} - ${retxazauta}]</strong><br> ${events[key].text}`;
 }
 
 // document.getElementById('jsonTexto').value = JSON.stringify(events, null, 2);

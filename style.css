@@ -2,7 +2,7 @@ body{
     width: 99%; /* how wide to make your web page */
     background-color: rgba(148, 148, 100, 0.5);/* what color to make the background */
     font:13px/17px Verdana, sans-serif; /* default font */
-    color: teal;
+    color: rgb(1, 5, 5);
 }
 #title:hover, #title:focus {
     cursor: pointer;
@@ -189,14 +189,18 @@ th {
     background-color: #c6da15 !important;
 }
 .event-Ane {
-    background-color: #f1a6b9 !important;
+    background-color: #f3aebf !important;
 }
 .event-Biyok {
     background-color: #5dcee2 !important;
 }
 
-.event-BiyokOnartua {
+.event-BiyokOnartuta {
     background-color: #06af06 !important;
+}
+
+.event-BiyokRetxazauta {
+    background-color: #d6473d !important;
 }
 
 td.nullDay {
