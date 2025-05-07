@@ -1,3 +1,11 @@
+import {
+    agregarEvento,
+    editarEvento,
+    eliminarEvento,
+    obtenerEventos,
+    escucharEventos
+  } from './firebase-eventos.js';
+
 let drawnMonth;
 let drawnYear;
 let eventTypes = [];
@@ -236,7 +244,7 @@ saveBtn.onclick = function () {
                         content.innerHTML = `<strong>[${eventType}]</strong><br> ${text}`;
 
                         // Color según tipo
-                        cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                        cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok", "event-BiyokOnartuta", "event-BiyokRetxazauta");
                         cell.classList.add(`event-${eventType}`);
                     }
                 }
@@ -267,16 +275,19 @@ saveBtn.onclick = function () {
 
                 // Mostrar con hora
                 let display = time ? `<strong>${time}</strong> - ` : "";
-                content.innerHTML = `<strong>[${display}${eventType} - ${egoera}]</strong><br> ${text}`;
+                if(eventType == "Biyok")
+                    content.innerHTML = `<strong>[${display}${eventType} - ${egoera}]</strong><br> ${text}`;
+                else
+                   content.innerHTML = `<strong>[${display}${eventType}]</strong><br> ${text}`;
 
                 // Color según tipo
-                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok", "event-BiyokOnartuta", "event-BiyokRetxazauta");
                 cell.classList.add(`event-${eventType}`);
             } else {
                 // Borrar evento
                 delete events[key];
                 content.textContent = "";
-                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok");
+                cell.classList.remove("event-Aitor", "event-Ane", "event-Biyok", "event-BiyokOnartuta", "event-BiyokRetxazauta");
             }
         }
         // Guardar en localStorage (si estás usando)
